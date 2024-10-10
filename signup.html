@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Honey Haven</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: cursive;
+      background-color: #fffbf0; /* Soft background color */
+      background-image: url('https://honey-boutique.com.au/wp-content/uploads/2024/05/Untitled-10-4-1.jpeg'); /* Background image */
+      background-size: cover;
+      background-attachment: fixed; /* Fixed background */
+      color: #333;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      background-color: rgba(247, 217, 107, 0.9); /* Honey color */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .navbar-brand img {
+      height: 50px;
+    }
+    .navbar-nav .nav-link {
+      font-weight: bold;
+      color: #6b4e2f;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #c68a2d; 
+      transition: color 0.3s;
+    }
+
+    /* Sign Up Section */
+    .signup-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      backdrop-filter: blur(5px); /* Blurred background */
+      position: relative;
+    }
+    .signup-form {
+      background-color: rgba(255, 255, 255, 0.9); /* White background with transparency */
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 100%;
+      max-width: 400px; /* Responsive max width */
+      text-align: center; /* Centered text */
+    }
+    .signup-form h2 {
+      color: #6b4e2f; /* Dark honey color */
+      margin-bottom: 20px;
+      font-size: 2rem; /* Larger font size */
+    }
+    .form-group label {
+      font-weight: bold; /* Bold labels */
+      color: #6b4e2f;
+    }
+    .form-control {
+      border-radius: 25px; /* Rounded input fields */
+      padding: 15px; /* Increased padding */
+      border: 1px solid #6b4e2f; /* Honey color border */
+    }
+    .btn-warning {
+      background-color: #c68a2d; 
+      border: none;
+      border-radius: 25px; /* Rounded button */
+      padding: 12px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .btn-warning:hover {
+      background-color: #b57f2a; 
+      transform: scale(1.05);
+    }
+    .link-text {
+      color: #6b4e2f; /* Link color */
+    }
+    .link-text:hover {
+      text-decoration: underline; /* Underline on hover */
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer a {
+      color: #f7d96b;
+    }
+    footer a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sign Up Section -->
+  <section class="signup-section">
+    <form class="signup-form" id="signup-form" method="POST" action="/signup">
+      <h2>Sign Up</h2>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password" required>
+      </div>
+      <button type="submit" class="btn btn-warning btn-block">Sign Up</button>
+      <p class="mt-3">Already have an account? <a href="login.html" class="link-text">Login</a></p>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      // Send data to the server
+      fetch('/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      })
+      .then(response => {
+        if (response.ok) {
+          // Redirect to login page after successful signup
+          window.location.href = 'login.ejs';
+        } else {
+          alert("Error signing up. Please try again.");
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  </script>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
